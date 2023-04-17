@@ -195,23 +195,25 @@
             </ul>
             <div class="products">
               <router-link
-              :to="{name:'product',params:{id:5}}"
-                v-for="item in 6"
-                :key="item"
+                :to="{ name: 'product', params: { id: product.id } }"
+                v-for="product in products"
+                :key="product.id"
                 class="products__item"
               >
                 <div class="card">
                   <div class="card__image">
                     <img
-                      :src="require(`../assets/img/slider/${item}.jpg`)"
+                      :src="require(`../assets/img/slider/${product.id}.jpg`)"
                       alt=""
                       class="card__img"
                     />
                   </div>
-                  <div class="card__title">گوشی موبایل سامسونگ مدل نوت 20</div>
+                  <div class="card__title">{{ product.name }}</div>
                   <div class="card__price">
                     <span class="card__compare-price">12,200,000</span>
-                    <span class="card__total-price">12,400,000 تومان</span>
+                    <span class="card__total-price"
+                      >{{ product.price }} تومان</span
+                    >
                   </div>
                   <span class="card__discount">%6</span>
                 </div>
@@ -232,6 +234,11 @@ export default {
     isOpenColorMenu: true,
     selectedFilters: [],
   }),
+  computed: {
+    products() {
+      return this.$store.state.products;
+    },
+  },
   methods: {
     removeAllFilter() {
       this.selectedFilters = [];
@@ -242,10 +249,9 @@ export default {
       );
     },
   },
-  created(){
-    console.log(this.$store.state)
-    console.log(this.$store.dispatch('getProducts'))
-  }
+  created() {
+    this.$store.dispatch("getProducts");
+  },
 };
 </script>
 
