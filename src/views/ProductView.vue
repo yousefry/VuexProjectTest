@@ -90,7 +90,7 @@
               <div class="product__left">
                 <div class="product__category">دسته وب</div>
                 <div class="product__info">
-                  <h1 class="product__title">محصول شماره یک یک شماره</h1>
+                  <h1 class="product__title">{{ product?.name }}</h1>
 
                   <div class="rating">
                     <div class="rating__star">
@@ -122,12 +122,8 @@
                   </div>
                 </div>
                 <div class="controls">
-                  <div class="controls__group">
-                   
-                  </div>
-                  <div class="controls__group">
-                    
-                  </div>
+                  <div class="controls__group"></div>
+                  <div class="controls__group"></div>
                 </div>
                 <div class="product__price">
                   <h5 class="product__campare-price">12,200,200</h5>
@@ -168,7 +164,7 @@
         <SwiperSlider>
           <template v-slot:title> محصولات مرتبط </template>
           <router-link
-          :to="{name:'product',params:{id:2}}"
+            :to="{ name: 'product', params: { id: 2 } }"
             class="swiper-slide"
             v-for="item in 6"
             :key="item"
@@ -215,7 +211,9 @@
             <div class="tab__sections">
               <section
                 class="tab__section tab__section--compare"
-                :style="activeTab === 'compare' ? 'display:block;' : 'display:none;'"
+                :style="
+                  activeTab === 'compare' ? 'display:block;' : 'display:none;'
+                "
               >
                 <p>
                   لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
@@ -372,9 +370,12 @@
                   هدف بهبود ابزارهای کاربردی می باشد.
                 </p>
               </section>
-              <section class="tab__section tab__section--featrues" 
-               :style="activeTab === 'featrue' ? 'display:block;' : 'display:none;'"
-               >
+              <section
+                class="tab__section tab__section--featrues"
+                :style="
+                  activeTab === 'featrue' ? 'display:block;' : 'display:none;'
+                "
+              >
                 <div class="tab__section-field">
                   <div class="col-3">
                     <h6 class="tab__section-name">ویژیگی 1</h6>
@@ -439,8 +440,11 @@
                   </div>
                 </div>
               </section>
-              <section class="tab__section tab__section--comments"
-               :style="activeTab === 'comment' ? 'display:block;' : 'display:none;'"
+              <section
+                class="tab__section tab__section--comments"
+                :style="
+                  activeTab === 'comment' ? 'display:block;' : 'display:none;'
+                "
               >
                 <div class="comments" id="comments">
                   <div class="comments__send">
@@ -652,6 +656,7 @@ import moment from "moment";
 
 import SwiperSlider from "@/components/SwiperSlider.vue";
 import "../assets/css/modal.css";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ProductView",
@@ -702,6 +707,7 @@ export default {
       { name: "Phoenix", language: "Elixir" },
     ],
     activeTab: "compare",
+    product: {},
   }),
   methods: {
     move(n) {
@@ -728,7 +734,7 @@ export default {
     },
     rateProduct() {
       console.log("its ok");
-    },
+    }
   },
   created() {
     setInterval(() => {
@@ -738,6 +744,16 @@ export default {
         duration.asDays()
       )}:${duration.days()}:${duration.minutes()}:${duration.seconds()}`;
     }, 1000);
+    this.product = this.$store.getters.getProductById(
+      parseInt(this.$route.params.id)
+    );
+    if (!this.product) {
+      this.$store.dispatch("getProducts").then(() => {
+        this.product = this.$store.getters.getProductById(
+          parseInt(this.$route.params.id)
+        );
+      });
+    }
   },
 };
 </script>

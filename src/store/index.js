@@ -6,7 +6,18 @@ const store = createStore({
         user: { name: 'yousef', id: 1 }
     }),
     getters: {
-
+        products(state) {
+            return state.products
+        },
+        userName(state) {
+            return state.user.name
+        },
+        getProductById: (state) => (id) => {
+            return state.products.find(product => product.id === id)
+        },
+        log() {
+            console.log('its ok')
+        }
     },
     mutations: {
         SET_PRODUCTS(state, data) {
