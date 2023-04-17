@@ -176,6 +176,7 @@
             </div>
           </div>
           <div class="page__content">
+            <h1>نام کاربر : {{ user.name }}</h1>
             <ul class="breadcrumb">
               <li class="breadcrumb__item breadcrumb__item--hide">
                 <a href="" class="breadcrumb__link"
@@ -227,6 +228,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "CategoryView",
   data: () => ({
@@ -235,9 +237,17 @@ export default {
     selectedFilters: [],
   }),
   computed: {
-    products() {
-      return this.$store.state.products;
-    },
+    ...mapState({
+      products: "products",
+      // user: "user",
+      user: (state) => state.user,
+    }),
+    // products() {
+    //   return this.$store.state.products;
+    // },
+    // user() {
+    //   return this.$store.state.user;
+    // },
   },
   methods: {
     removeAllFilter() {
