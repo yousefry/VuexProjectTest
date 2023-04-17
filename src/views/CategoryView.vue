@@ -242,9 +242,10 @@ export default {
       );
     },
   },
-  metaInfo: {
-    title: "دسته بندی محصولات",
-  },
+  created(){
+    console.log(this.$store.state)
+    console.log(this.$store.dispatch('getProducts'))
+  }
 };
 </script>
 
