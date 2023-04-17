@@ -123,24 +123,10 @@
                 </div>
                 <div class="controls">
                   <div class="controls__group">
-                    <multiselect
-                      v-model="colorSelected"
-                      :options="colorOptions"
-                      placeholder="یک گزینه را انتخاب کنید "
-                    ></multiselect>
+                   
                   </div>
                   <div class="controls__group">
-                    <multiselect
-                      v-model="languageSelected"
-                      :options="languageOptions"
-                      :multiple="true"
-                      :close-on-select="false"
-                      :preserve-search="true"
-                      label="name"
-                      track-by="name"
-                      :preselect-first="true"
-                      placeholder="انتخاب کنید "
-                    ></multiselect>
+                    
                   </div>
                 </div>
                 <div class="product__price">
@@ -663,14 +649,13 @@
 
 <script>
 import moment from "moment";
-import Multiselect from "vue-multiselect";
+
 import SwiperSlider from "@/components/SwiperSlider.vue";
 import "../assets/css/modal.css";
-import "vue-multiselect/dist/vue-multiselect.min.css";
+
 export default {
   name: "ProductView",
   components: {
-    Multiselect,
     SwiperSlider,
   },
   data: () => ({

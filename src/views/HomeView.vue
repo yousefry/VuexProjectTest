@@ -111,10 +111,6 @@ export default {
   components: {
     SwiperSlider,
   },
-  metaInfo:{
-    title:"صفحه اصلی"
-  }
-  ,
   data: () => ({
     slides: [
       { img: require("../assets/img/slideshow/1.png") },
