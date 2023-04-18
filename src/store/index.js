@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import axios from "axios";
+import { SET_PRODUCTS_MUTATIONS } from './types.js'
 const store = createStore({
     state: () => ({
         products: [],
@@ -20,7 +21,7 @@ const store = createStore({
         }
     },
     mutations: {
-        SET_PRODUCTS(state, data) {
+        [SET_PRODUCTS_MUTATIONS](state, data) {
             state.products = data
         }
     },

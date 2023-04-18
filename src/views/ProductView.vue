@@ -656,8 +656,9 @@ import moment from "moment";
 
 import SwiperSlider from "@/components/SwiperSlider.vue";
 import "../assets/css/modal.css";
-import { mapGetters } from "vuex";
-
+import { mapGetters, mapMutations } from "vuex";
+import axios from "axios";
+import {SET_PRODUCTS_MUTATIONS} from '@/store/types.js'
 export default {
   name: "ProductView",
   components: {
@@ -734,9 +735,10 @@ export default {
     },
     rateProduct() {
       console.log("its ok");
-    }
+    },
+    ...mapMutations([SET_PRODUCTS_MUTATIONS])
   },
-  created() {
+  async created() {
     setInterval(() => {
       let timeDiff = this.dateCoutDown.diff(moment());
       let duration = moment.duration(timeDiff);
@@ -747,12 +749,30 @@ export default {
     this.product = this.$store.getters.getProductById(
       parseInt(this.$route.params.id)
     );
+
+    // if (!this.product) {
+    //   this.$store.dispatch("getProducts").then(() => {
+    //     this.product = this.$store.getters.getProductById(
+    //       parseInt(this.$route.params.id)
+    //     );
+    //   });
+    // }
+
+    // with mutation
     if (!this.product) {
-      this.$store.dispatch("getProducts").then(() => {
-        this.product = this.$store.getters.getProductById(
-          parseInt(this.$route.params.id)
-        );
-      });
+      const { data } = await axios.get(
+        "https://gist.githubusercontent.com/yousefry/1a28a4feaccedd6ddab3746899645555/raw/2ee20ef04b7fd62525ba7970c41facab9444da02/products.json"
+      );
+
+      // this.$store.commit(SET_PRODUCTS_MUTATIONS, data);
+      
+      // this with mapMutations from methods
+      
+      this.SET_PRODUCTS(data)
+
+      this.product = this.$store.getters.getProductById(
+        parseInt(this.$route.params.id)
+      );
     }
   },
 };
