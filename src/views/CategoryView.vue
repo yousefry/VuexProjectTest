@@ -228,7 +228,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapState,mapActions } from "vuex";
 export default {
   name: "CategoryView",
   data: () => ({
@@ -266,9 +266,13 @@ export default {
         (item) => item !== filter
       );
     },
+    ...mapActions(['getProducts'])
   },
   created() {
     this.$store.dispatch("getProducts");
+
+    // this with mapActions from methods
+    this.getProducts({token:'myiyraai29'});
   },
 };
 </script>

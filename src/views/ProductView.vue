@@ -767,7 +767,6 @@ export default {
       // this.$store.commit(SET_PRODUCTS_MUTATIONS, data);
       
       // this with mapMutations from methods
-      
       this.SET_PRODUCTS(data)
 
       this.product = this.$store.getters.getProductById(
