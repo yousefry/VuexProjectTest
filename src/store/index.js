@@ -1,18 +1,25 @@
 import { createStore } from "vuex";
 import axios from "axios";
-import { SET_PRODUCTS_MUTATIONS } from './types.js'
+// import { SET_PRODUCTS_MUTATIONS } from './products/types.js'
 
-import state from './state.js'
-import getters from './getters.js'
-import mutations from './mutations.js'
-import actions from './actions.js'
+import state from './products/store/state.js'
+import getters from './products/store/getters.js'
+import mutations from './products/store/mutations.js'
+import actions from './products/store/actions.js'
 
+import user from './user/index.js';
+import products from './products/index.js';
 const store = createStore({
-    state,
-    getters,
-    mutations,
-    actions,
+    // state,
+    // getters,
+    // mutations,
+    // actions,
 
+
+    modules: {
+        userModules: user,
+        allProducts: products
+    }
     // state: () => ({
     //     products: [],
     //     user: { name: 'yousef', id: 1 }

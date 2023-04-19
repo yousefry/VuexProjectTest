@@ -658,7 +658,7 @@ import SwiperSlider from "@/components/SwiperSlider.vue";
 import "../assets/css/modal.css";
 import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
-import {SET_PRODUCTS_MUTATIONS} from '@/store/types.js'
+import {SET_PRODUCTS_MUTATIONS} from '../store/products/types.js'
 export default {
   name: "ProductView",
   components: {

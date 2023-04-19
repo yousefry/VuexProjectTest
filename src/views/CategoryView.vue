@@ -228,7 +228,13 @@
 </template>
 
 <script>
-import { mapGetters, mapState,mapActions } from "vuex";
+import {
+  mapGetters,
+  mapState,
+  mapActions,
+  createNamespacedHelpers,
+} from "vuex";
+// const { mapActions } = createNamespacedHelpers("products");
 export default {
   name: "CategoryView",
   data: () => ({
@@ -252,10 +258,12 @@ export default {
     //   return this.$store.getters.userName;
     // },
 
-    ...mapGetters({
-      products: "products",
-      user: "userName",
-    }),
+    // ...mapGetters({
+    //   products: "products",
+    //   user: "userName",
+    // }),
+    ...mapGetters("allProducts", ["products"]), // allProducts in name modules ,products or name getter for use
+    ...mapGetters("userModules", { user: "name" }), // first user name modules , second user use in this page in html , and name is getter in user
   },
   methods: {
     removeAllFilter() {
@@ -266,13 +274,15 @@ export default {
         (item) => item !== filter
       );
     },
-    ...mapActions(['getProducts'])
+    // ...mapActions(["products/getProducts"]),
   },
   created() {
-    this.$store.dispatch("getProducts");
+    this.$store.dispatch("allProducts/getProducts");
 
     // this with mapActions from methods
-    this.getProducts({token:'myiyraai29'});
+    // this.getProducts({ token: "myiyraai29" });
+
+    // console.log(this.$store.getters['userModules/name'])
   },
 };
 </script>
