@@ -9,6 +9,7 @@ import actions from './products/store/actions.js'
 
 import user from './user/index.js';
 import products from './products/index.js';
+import counter from './counter/index.js';
 const store = createStore({
     // state,
     // getters,
@@ -17,6 +18,7 @@ const store = createStore({
 
 
     modules: {
+        counter: counter,
         userModules: user,
         allProducts: products
     }
