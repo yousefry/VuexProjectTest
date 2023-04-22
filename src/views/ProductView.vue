@@ -31,6 +31,7 @@
         <div class="product">
           <div class="product__header">
             <div class="product__expiration">
+              <h4>for test :: {{ $store.state.cart.string }}</h4>
               <div
                 class="count-down__timer"
                 data-countdown="2021-08-07 00:00:00"
@@ -137,7 +138,10 @@
                   این محصول موجود نمی باشد
                 </div>
                 <div class="product__buttons">
-                  <button class="btn btn--brand btn--boxshadow btn--add-basket">
+                  <button
+                    class="btn btn--brand btn--boxshadow btn--add-basket"
+                    @click="addProduct(product)"
+                  >
                     افزدون به سبد خرید
                   </button>
                   <button class="btn btn-transparent btn--fav">
@@ -656,9 +660,9 @@ import moment from "moment";
 
 import SwiperSlider from "@/components/SwiperSlider.vue";
 import "../assets/css/modal.css";
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapState, mapActions } from "vuex";
 import axios from "axios";
-import {SET_PRODUCTS_MUTATIONS} from '../store/products/types.js'
+import { SET_PRODUCTS_MUTATIONS } from "../store/products/types.js";
 export default {
   name: "ProductView",
   components: {
@@ -710,6 +714,9 @@ export default {
     activeTab: "compare",
     product: {},
   }),
+  computed: {
+    ...mapState("cart", ["productsInCart"]),
+  },
   methods: {
     move(n) {
       if (this.slideIndex + n >= this.slideGallery.length) {
@@ -736,7 +743,8 @@ export default {
     rateProduct() {
       console.log("its ok");
     },
-    ...mapMutations([SET_PRODUCTS_MUTATIONS])
+    ...mapMutations("allProducts", [SET_PRODUCTS_MUTATIONS]),
+    ...mapActions("cart", ["addProduct"]),
   },
   async created() {
     setInterval(() => {
@@ -746,7 +754,7 @@ export default {
         duration.asDays()
       )}:${duration.days()}:${duration.minutes()}:${duration.seconds()}`;
     }, 1000);
-    this.product = this.$store.getters.getProductById(
+    this.product = this.$store.getters["allProducts/getProductById"](
       parseInt(this.$route.params.id)
     );
 
@@ -765,11 +773,11 @@ export default {
       );
 
       // this.$store.commit(SET_PRODUCTS_MUTATIONS, data);
-      
-      // this with mapMutations from methods
-      this.SET_PRODUCTS(data)
 
-      this.product = this.$store.getters.getProductById(
+      // this with mapMutations from methods
+      this.SET_PRODUCTS(data);
+
+      this.product = this.$store.getters["allProducts/getProductById"](
         parseInt(this.$route.params.id)
       );
     }

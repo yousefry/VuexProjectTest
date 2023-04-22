@@ -10,6 +10,10 @@ import actions from './products/store/actions.js'
 import user from './user/index.js';
 import products from './products/index.js';
 import counter from './counter/index.js';
+
+// import { namespaced, stat } from "./cart/index.js";      // #1 to import cart modules
+import * as cart from './cart' // #2 import cart
+
 const store = createStore({
     // state,
     // getters,
@@ -18,6 +22,7 @@ const store = createStore({
 
 
     modules: {
+        cart,
         counter: counter,
         userModules: user,
         allProducts: products

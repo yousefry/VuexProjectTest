@@ -15,10 +15,16 @@
           >
             <ul class="navbar__ul">
               <li class="navbar__item">
-                 <router-link class="navbar__link navbar__link--is-active" :to="{name : 'home'}">صفحه اصلی</router-link>
+                <router-link
+                  class="navbar__link navbar__link--is-active"
+                  :to="{ name: 'home' }"
+                  >صفحه اصلی</router-link
+                >
               </li>
               <li class="navbar__item navbar__item--has-sub">
-                  <router-link class="navbar__link" :to="{name : 'category'}">دسته بندی</router-link>
+                <router-link class="navbar__link" :to="{ name: 'category' }"
+                  >دسته بندی</router-link
+                >
                 <ul class="navbar__subset">
                   <li class="navbar__item">
                     <a href="" class="navbar__link">زیر منو 1</a>
@@ -54,7 +60,9 @@
                 </ul>
               </li>
               <li class="navbar__item">
-                  <router-link class="navbar__link" :to="{name : 'about'}">درباره ما</router-link>
+                <router-link class="navbar__link" :to="{ name: 'about' }"
+                  >درباره ما</router-link
+                >
               </li>
               <li class="navbar__item">
                 <a href="" class="navbar__link">تماس باما</a>
@@ -64,7 +72,7 @@
           <div class="navbar__action">
             <div class="header__basket" @click="showDropDownBasket">
               <span class="header__basket-icon"></span>
-              <span class="header__basket-count">0</span>
+              <span class="header__basket-count">{{ productsInCart.length}}</span>
               <div
                 class="header__dropdown"
                 :class="{
@@ -76,30 +84,31 @@
                 >
                   <div
                     class="header__basket-item"
-                    v-for="item in 3"
-                    :key="item"
+                    v-for="item in productsInCart"
+                    :key="item.id"
                   >
                     <a href="" class="header__basket-link">
                       <img
-                        :src="require('../assets/img/big-pic.jpg')"
+                        :src="require(`../assets/img/slider/${item.id}.jpg`)"
                         class="header__basket-img"
                       />
                     </a>
                     <div class="header__basket-details">
-                      <h5>
+                      <h5>  
                         <a class="header__basket-title" href=""
-                          >محصول شماره یک</a
+                          >{{ `${item.name} ---  ${(item.quantity)}`}} </a
                         >
                       </h5>
-                      <div class="header__basket-price">120000 تومان</div>
+                      <div class="header__basket-price">{{ item.price * item.quantity}} تومان</div>
                       <a href="" class="header__basket-remove">حذف</a>
                     </div>
                   </div>
                   <div class="header__basket-btn">
                     <router-link
-                      :to="{name : 'cart'}"
+                      :to="{ name: 'cart' }"
                       class="btn btn--boxshadow btn--brand w--100"
-                      >ثبت و نهایی کردن سفارش</router-link>
+                      >ثبت و نهایی کردن سفارش</router-link
+                    >
                   </div>
                 </div>
               </div>
@@ -113,27 +122,34 @@
                 }"
               >
                 <div class="header__dropdown-content">
-                  <router-link :to="{name : 'login'}" class="header__account-link">ورود</router-link>
-                  <router-link :to="{name :'register'}" class="header__account-link"
+                  <router-link
+                    :to="{ name: 'login' }"
+                    class="header__account-link"
+                    >ورود</router-link
+                  >
+                  <router-link
+                    :to="{ name: 'register' }"
+                    class="header__account-link"
                     >ثبت نام</router-link
                   >
                 </div>
               </div>
             </div>
             <div
-              class="header__menu" :class="{'header__menu--is-active' : sidebarMenuIsActive}"
+              class="header__menu"
+              :class="{ 'header__menu--is-active': sidebarMenuIsActive }"
               @click="sidebarMenuIsActive = !sidebarMenuIsActive"
             ></div>
           </div>
         </div>
       </div>
     </div>
-  
-   
   </header>
+  
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "BaseHeader",
 
@@ -142,6 +158,9 @@ export default {
     isActiveDropDownAccount: false,
     sidebarMenuIsActive: false,
   }),
+  computed: {
+    ...mapState("cart", ["productsInCart"]),
+  },
   methods: {
     showDropDownBasket() {
       this.isActiveDropDownAccount = false;
